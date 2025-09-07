@@ -1,0 +1,6 @@
+packages: []
+catalogs:
+  fraemwork:
+    vitepress: latest
+  ui:
+    '@theojs/lumen': ^6.4.4
