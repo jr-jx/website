@@ -1,6 +1,11 @@
-packages: []
-catalogs:
-  fraemwork:
-    vitepress: latest
-  ui:
-    '@theojs/lumen': ^6.4.4
+packages:
+  - 'packages/*'
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@tailwindcss/oxide'
+  - better-sqlite3
+  - esbuild
+  - sharp
+  - unrs-resolver
+  - vue-demi
