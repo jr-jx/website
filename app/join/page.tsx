@@ -1,9 +1,18 @@
+import { JoinHero } from "@/components/join/JoinHero";
+import { JoinProcess } from "@/components/join/JoinProcess";
+import { JoinRequirements } from "@/components/join/JoinRequirements";
+import { JoinFAQ } from "@/components/join/JoinFAQ";
+import { JoinCTA } from "@/components/join/JoinCTA";
+
 export default function JoinPage() {
   return (
-    <main className="container mx-auto px-6 py-10">
-      <h1 className="text-3xl font-bold">加入我们</h1>
-      <p className="mt-4 text-muted-foreground">报名方式、常见问题、联系方式。</p>
-    </main>
+    <div className="min-h-screen">
+      <JoinHero />
+      <JoinProcess />
+      <JoinRequirements />
+      <JoinFAQ />
+      <JoinCTA />
+    </div>
   );
 }
 
