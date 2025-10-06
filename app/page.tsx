@@ -57,6 +57,9 @@ export default function Home() {
           <Button asChild>
             <Link href="/blog/hello">查看 MDX 示例</Link>
           </Button>
+          <Button asChild variant="outline">
+            <Link href="/search">站内搜索</Link>
+          </Button>
           <BounceDemo />
         </div>
       </main>
