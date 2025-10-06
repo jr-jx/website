@@ -1,9 +1,18 @@
+import { AboutHero } from "@/components/about/AboutHero";
+import { VisionMission } from "@/components/about/VisionMission";
+import { HistoryTimeline } from "@/components/about/HistoryTimeline";
+import { ValuesSection } from "@/components/about/ValuesSection";
+import { ProjectDirections } from "@/components/about/ProjectDirections";
+
 export default function AboutPage() {
   return (
-    <main className="container mx-auto px-6 py-10">
-      <h1 className="text-3xl font-bold">关于我们</h1>
-      <p className="mt-4 text-muted-foreground">愿景、历史、社团价值与项目方向。</p>
-    </main>
+    <div className="min-h-screen">
+      <AboutHero />
+      <VisionMission />
+      <HistoryTimeline />
+      <ValuesSection />
+      <ProjectDirections />
+    </div>
   );
 }
 
