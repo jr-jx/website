@@ -1,14 +1,18 @@
-"use client";
-
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { useMDXComponents } from "@/mdx-components";
+import { Callout } from "@/components/mdx/Callout";
+import { Badge } from "@/components/mdx/Badge";
+import { CodeBlock } from "@/components/mdx/CodeBlock";
 
 interface MDXContentProps {
   source: string;
 }
 
 export function MDXContent({ source }: MDXContentProps) {
-  const components = useMDXComponents({});
+  const components = {
+    Callout,
+    Badge,
+    CodeBlock,
+  };
   
   return (
     <article className="prose dark:prose-invert max-w-none">
