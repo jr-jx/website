@@ -1,13 +1,13 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import BounceDemo from "@/components/animations/BounceDemo";
 
 export default function Home() {
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
+        <OptimizedImage
           className="dark:invert"
           src="/next.svg"
           alt="Next.js logo"
@@ -35,7 +35,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image
+            <OptimizedImage
               className="dark:invert"
               src="/vercel.svg"
               alt="Vercel logomark"
@@ -70,7 +70,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
+          <OptimizedImage
             aria-hidden
             src="/file.svg"
             alt="File icon"
@@ -85,7 +85,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
+          <OptimizedImage
             aria-hidden
             src="/window.svg"
             alt="Window icon"
@@ -100,7 +100,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
+          <OptimizedImage
             aria-hidden
             src="/globe.svg"
             alt="Globe icon"
