@@ -7,6 +7,7 @@ export type ContentMeta = {
   date?: string;
   excerpt?: string;
   slug: string;
+  draft?: boolean;
 };
 
 export type LoadedContent = ContentMeta & {
@@ -26,18 +27,24 @@ async function readDirectoryFiles(dir: string): Promise<string[]> {
   }
 }
 
-export async function listContent(dir: string): Promise<ContentMeta[]> {
+export async function listContent(dir: string, includeDrafts = false): Promise<ContentMeta[]> {
   const files = await readDirectoryFiles(dir);
   const items: ContentMeta[] = [];
   for (const file of files) {
     const raw = await fs.readFile(file, "utf8");
     const { data } = matter(raw);
     const slug = path.basename(file).replace(/\.mdx$/, "");
+    const isDraft = Boolean(data.draft);
+    
+    // Skip drafts unless explicitly included
+    if (isDraft && !includeDrafts) continue;
+    
     items.push({
       title: typeof data.title === "string" ? data.title : slug,
       date: typeof data.date === "string" ? data.date : undefined,
       excerpt: typeof data.excerpt === "string" ? data.excerpt : undefined,
       slug,
+      draft: isDraft,
     });
   }
   // sort by date desc if present, otherwise by title
@@ -61,6 +68,7 @@ export async function loadContentBySlug(
       date: typeof data.date === "string" ? data.date : undefined,
       excerpt: typeof data.excerpt === "string" ? data.excerpt : undefined,
       slug,
+      draft: Boolean(data.draft),
       content,
     };
   } catch {
