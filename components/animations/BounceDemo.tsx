@@ -1,15 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import anime from "animejs/dist/bundles/anime.esm.js";
+import { animate } from "animejs";
 
 export default function BounceDemo() {
   const boxRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!boxRef.current) return;
-    const animation = anime({
-      targets: boxRef.current,
+    const animation = animate(boxRef.current, {
       translateY: [0, -12, 0],
       easing: "easeInOutSine",
       duration: 1200,
