@@ -2,8 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { stagger, createTimeline } from "animejs";
-import { Badge } from "@/components/mdx/Badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { AiOutlineCalendar, AiOutlineTrophy, AiOutlineTeam, AiOutlineRocket } from "react-icons/ai";
 
 const timelineData = [
@@ -26,7 +24,7 @@ const timelineData = [
   {
     year: "2021",
     title: "项目孵化",
-    description: "启动首个开源项目"TechShare"，建立项目孵化机制，支持成员创新创业。",
+    description: "启动首个开源项目\"TechShare\"，建立项目孵化机制，支持成员创新创业。",
     icon: AiOutlineRocket,
     color: "from-purple-500 to-violet-500",
     bgColor: "from-purple-50 to-purple-100/50 dark:from-purple-950/20 dark:to-purple-900/10"
@@ -68,14 +66,16 @@ export function HistoryTimeline() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const timeline = createTimeline()
-              .add(timelineRef.current?.children, {
-                translateX: [-50, 0],
-                opacity: [0, 1],
-                duration: 600,
-                easing: "easeOutExpo",
-                delay: stagger(150),
-              });
+            if (timelineRef.current?.children) {
+              createTimeline()
+                .add(timelineRef.current.children, {
+                  translateX: [-50, 0],
+                  opacity: [0, 1],
+                  duration: 600,
+                  easing: "easeOutExpo",
+                  delay: stagger(150),
+                });
+            }
           }
         });
       },
@@ -88,48 +88,49 @@ export function HistoryTimeline() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-background">
+    <section ref={sectionRef} className="py-24 bg-slate-50 dark:bg-slate-900">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <Badge className="mb-4">发展历程</Badge>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            我们的<span className="text-primary">成长轨迹</span>
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center px-6 py-3 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium mb-6">
+            <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
+            发展历程
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-6">
+            我们的成长轨迹
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
             从成立至今，我们经历了无数挑战与突破，
             每一步都见证着协会的成长与成员的努力。
           </p>
         </div>
 
-        <div ref={timelineRef} className="max-w-4xl mx-auto">
+        <div ref={timelineRef} className="max-w-5xl mx-auto">
           <div className="relative">
-            {/* 时间线 */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-primary/20 hidden md:block" />
-            
-            <div className="space-y-12">
+            <div className="space-y-16">
               {timelineData.map((item, index) => {
                 const IconComponent = item.icon;
+                const isEven = index % 2 === 0;
                 return (
-                  <div key={item.year} className="relative flex items-start gap-8">
+                  <div key={item.year} className={`relative flex items-center gap-8 ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                     {/* 时间点 */}
-                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                    <div className="flex-shrink-0 w-20 h-20 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-lg shadow-lg relative z-10">
                       {item.year}
                     </div>
                     
                     {/* 内容卡片 */}
-                    <Card className={`flex-1 group hover:shadow-lg transition-all duration-300 border-0 bg-gradient-to-br ${item.bgColor}`}>
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${item.color} flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`flex-1 ${isEven ? 'md:text-right' : 'md:text-left'}`}>
+                      <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all duration-300">
+                        <div className={`flex items-start gap-4 ${isEven ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
+                          <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${item.color} flex items-center justify-center text-xl flex-shrink-0`}>
                             <IconComponent className="text-white" />
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                            <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                            <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-slate-100">{item.title}</h3>
+                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{item.description}</p>
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
                   </div>
                 );
               })}
