@@ -5,6 +5,7 @@ import { stagger, createTimeline } from "animejs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/mdx/Badge";
 import Link from "next/link";
+import { AiOutlineUserAdd, AiOutlineCalendar } from "react-icons/ai";
 
 export function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -77,10 +78,16 @@ export function HeroSection() {
 
           <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
             <Button asChild size="lg" className="text-lg px-8 py-6">
-              <Link href="/join">加入我们</Link>
+              <Link href="/join" className="flex items-center gap-2">
+                <AiOutlineUserAdd />
+                加入我们
+              </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6">
-              <Link href="/events">查看活动</Link>
+              <Link href="/events" className="flex items-center gap-2">
+                <AiOutlineCalendar />
+                查看活动
+              </Link>
             </Button>
           </div>
 

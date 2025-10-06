@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/theme/ModeToggle";
 import { cn } from "@/lib/utils";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const nav = [
   { href: "/", label: "首页" },
@@ -38,7 +39,10 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-2">
           <Button asChild size="sm">
-            <Link href="/search">搜索</Link>
+            <Link href="/search" className="flex items-center gap-2">
+              <AiOutlineSearch />
+              搜索
+            </Link>
           </Button>
           <ModeToggle />
         </div>

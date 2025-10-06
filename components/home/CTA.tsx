@@ -5,6 +5,7 @@ import { animate, stagger } from "animejs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import { AiOutlineUserAdd, AiOutlineMail } from "react-icons/ai";
 
 export function CTA() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -59,10 +60,16 @@ export function CTA() {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button asChild size="lg" className="text-lg px-8 py-6">
-                  <Link href="/join">立即加入</Link>
+                  <Link href="/join" className="flex items-center gap-2">
+                    <AiOutlineUserAdd />
+                    立即加入
+                  </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6">
-                  <Link href="/contact">联系我们</Link>
+                  <Link href="/contact" className="flex items-center gap-2">
+                    <AiOutlineMail />
+                    联系我们
+                  </Link>
                 </Button>
               </div>
 

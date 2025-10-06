@@ -5,33 +5,34 @@ import { animate, stagger } from "animejs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/mdx/Badge";
 import Link from "next/link";
+import { AiOutlineBulb, AiOutlineTeam, AiOutlineBook, AiOutlineMessage } from "react-icons/ai";
 
 const features = [
   {
     title: "技术分享",
     description: "定期举办技术讲座，分享前沿技术趋势和实战经验",
-    icon: "💡",
+    icon: AiOutlineBulb,
     href: "/events",
     color: "from-blue-500 to-cyan-500",
   },
   {
     title: "项目协作",
     description: "参与开源项目，与志同道合的伙伴一起创造价值",
-    icon: "🤝",
+    icon: AiOutlineTeam,
     href: "/team",
     color: "from-green-500 to-emerald-500",
   },
   {
     title: "学习资源",
     description: "丰富的技术文档和教程，助你快速提升技能",
-    icon: "📚",
+    icon: AiOutlineBook,
     href: "/docs",
     color: "from-purple-500 to-violet-500",
   },
   {
     title: "社区交流",
     description: "活跃的社区讨论，解答疑问，分享心得",
-    icon: "💬",
+    icon: AiOutlineMessage,
     href: "/blog",
     color: "from-orange-500 to-red-500",
   },
@@ -89,7 +90,7 @@ export function FeatureGrid() {
             <Card key={index} className="group hover:shadow-lg transition-all duration-300 border-0 bg-background/50 backdrop-blur-sm">
               <CardHeader className="text-center pb-4">
                 <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300`}>
-                  {feature.icon}
+                  <feature.icon className="text-white" />
                 </div>
                 <CardTitle className="text-xl">{feature.title}</CardTitle>
               </CardHeader>
