@@ -1,0 +1,9 @@
+.next
+node_modules
+build
+out
+coverage
+*.tsbuildinfo
+pnpm-lock.yaml
+
+
