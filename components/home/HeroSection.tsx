@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { animate, stagger } from "animejs";
+import { stagger, createTimeline } from "animejs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/mdx/Badge";
 import Link from "next/link";
@@ -13,34 +13,29 @@ export function HeroSection() {
   const buttonsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!heroRef.current) return;
+    if (!heroRef.current || !titleRef.current || !subtitleRef.current || !buttonsRef.current) return;
 
     // 页面加载动画序列
-    const timeline = animate([
-      {
-        targets: titleRef.current,
+    const timeline = createTimeline()
+      .add(titleRef.current, {
         translateY: [50, 0],
         opacity: [0, 1],
         duration: 800,
         easing: "easeOutExpo",
-      },
-      {
-        targets: subtitleRef.current,
+      })
+      .add(subtitleRef.current, {
         translateY: [30, 0],
         opacity: [0, 1],
         duration: 600,
         easing: "easeOutExpo",
-        delay: 200,
-      },
-      {
-        targets: buttonsRef.current?.children,
+      }, 200)
+      .add(buttonsRef.current.children, {
         translateY: [30, 0],
         opacity: [0, 1],
         duration: 500,
         easing: "easeOutExpo",
         delay: stagger(100),
-      },
-    ]);
+      }, 400);
 
     return () => {
       timeline.pause();

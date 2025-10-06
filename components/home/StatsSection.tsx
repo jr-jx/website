@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { animate } from "animejs";
 
 const stats = [
   { label: "活跃成员", value: 150, suffix: "+" },
@@ -23,19 +22,27 @@ export function StatsSection() {
           if (entry.isIntersecting) {
             // 数字计数动画
             stats.forEach((stat, index) => {
-              animate({
-                targets: { value: 0 },
-                value: stat.value,
-                duration: 2000,
-                easing: "easeOutExpo",
-                update: (anim) => {
-                  setAnimatedValues(prev => {
-                    const newValues = [...prev];
-                    newValues[index] = Math.round(anim.animatables[0].target.value);
-                    return newValues;
-                  });
-                },
-              });
+              const startTime = Date.now();
+              const duration = 2000;
+              
+              const animateValue = () => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOutExpo = 1 - Math.pow(2, -10 * progress);
+                const currentValue = Math.round(stat.value * easeOutExpo);
+                
+                setAnimatedValues(prev => {
+                  const newValues = [...prev];
+                  newValues[index] = currentValue;
+                  return newValues;
+                });
+                
+                if (progress < 1) {
+                  requestAnimationFrame(animateValue);
+                }
+              };
+              
+              animateValue();
             });
             observer.unobserve(entry.target);
           }
