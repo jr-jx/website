@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { loadContentBySlug, listContent } from "@/lib/mdx";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import { EventDetails } from "@/components/events/EventDetails";
+import { MDXContent } from "@/components/mdx/MDXContent";
 
 export const dynamicParams = true;
 
@@ -27,9 +27,9 @@ export default async function EventPage({
   return (
     <main className="container mx-auto px-6 py-10">
       <EventDetails event={event} />
-      <article className="prose dark:prose-invert max-w-none mt-8">
-        <MDXRemote source={event.content} />
-      </article>
+      <div className="mt-8">
+        <MDXContent source={event.content} />
+      </div>
     </main>
   );
 }
