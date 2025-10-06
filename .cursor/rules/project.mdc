@@ -1,0 +1,24 @@
+description: 项目简介与技术栈说明
+globs: **/**
+alwaysApply: false
+---
+# Project
+
+這是先锋计算机协会的官网，基於 Next.js 構建；樣式使用 Tailwind CSS；UI 元件採用 shadcn/ui；動效由 Anime.js 實現；內容管理使用 MDX。
+
+- 技術棧：Next.js、Tailwind CSS、shadcn/ui、MDX、Anime.js
+- 目標：專注內容表達、良好可訪問性、行動端優先、快速發布
+- 本地開發：
+  - 安裝依賴：pnpm i
+  - 啟動開發：pnpm dev
+  - 構建產物：pnpm build
+
+- 頁面說明（示例路由，實際以路由目錄為準）：
+  - 首頁：`/`——協會簡介、最新活動/公告、主要入口導航
+  - 關於我們：`/about`——願景、歷史、社團價值與項目方向
+  - 成員/團隊：`/team`——核心成員、指導老師、招新信息入口
+  - 活動/日程：`/events`——活動列表、活動詳情頁（`/events/[slug]`）
+  - 博客/文章（MDX）：`/blog`——文章列表與詳情（`/blog/[slug]`）
+  - 文檔/資源（MDX）：`/docs`——技術文檔、指南（`/docs/[slug]`）
+  - 加入我們：`/join`——報名方式、常見問題、聯繫方式
+  - 聯繫：`/contact`——郵箱、社交賬號、地點與地圖

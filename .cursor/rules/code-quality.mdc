@@ -1,0 +1,18 @@
+description: 代码质量规范（Next.js/React/TypeScript/Tailwind/shadcn/ui/MDX）
+globs: *.ts,*.tsx
+alwaysApply: false
+---
+你需要考虑代码质量，以下规则请务必遵守（按优先级由高到低）：
+
+1. DRY 与抽象：避免重复代码；多处使用的 Types 抽取到 `types/`；重复 JSX 逻辑封装为通用组件或抽离为 Hook。
+2. 组件粒度：避免「巨型组件」。复杂 UI 拆分为更小的展示组件 + 容器组件；跨组件共享/复杂副作用抽离到 `useXxx` Hook。
+3. TypeScript 严格性：开启严格模式；为公共 API/导出函数写明确类型；避免 `any`；使用判定类型守卫；后端/接口数据用 zod 校验。
+4. Next.js 边界：默认优先 Server Components；仅在需要交互/浏览器 API 时使用 Client Components；清晰区分 server/client 模块；数据获取使用 `fetch` 缓存策略或 Server Actions（如适用）。
+5. 性能优化：合理使用 `React.memo`、`useMemo`、`useCallback`；避免不必要的依赖变更；使用动态导入与按需加载；列表使用 key 稳定且可预测；图片使用 `next/image`；链接使用 `next/link`。
+6. 样式与 UI：Tailwind 优先组合原子类，抽象重复样式到 `@apply` 或可复用组件；遵循 shadcn/ui 的 `variant`/`size` 模式与 class-variance-authority 约定；避免内联样式影响复用与暗色模式。
+7. 可访问性与语义化：优先语义标签（nav/main/header/footer/button 等）；为交互元素提供 `aria-*` 与键盘可达性；图像提供 `alt`；动画与动效遵守 `prefers-reduced-motion`。
+8. 动效与动画：Anime.js 动画应解耦于业务逻辑；在 Client Components 中以 effect 管理生命周期；避免在高频渲染路径上触发 layout thrash；尽量使用 transform/compositor。
+9. 错误处理与边界：网络请求与数据解析必须有错误分支与空态；使用 Error Boundary 捕获渲染错误；在 Server 端记录关键信息，避免在客户端暴露敏感细节。
+10. 目录与命名：文件与组件名语义化；每个文件只暴露最小必要 API；公共组件放置在 `components/`，复用逻辑放 `hooks/`，公共类型放 `types/`；遵循一致的命名风格。
+11. 内容与 MDX：在 MDX 中保持展示为主，复杂逻辑下沉到组件；可复用的内容块封装为组件；避免在 MDX 中编写数据获取逻辑。
+12. 测试与工具：关键逻辑/Hook 编写单元测试；遵循 ESLint/Prettier 规则；引入依赖需具备明确价值与长期维护性评估。
