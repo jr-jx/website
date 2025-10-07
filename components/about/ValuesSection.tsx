@@ -10,6 +10,8 @@ import {
   AiOutlineIe,
   AiOutlineGlobal
 } from "react-icons/ai";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { PageCard } from "@/components/ui/PageCard";
 
 const values = [
   {
@@ -89,44 +91,30 @@ export function ValuesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-white dark:bg-slate-800">
+    <section ref={sectionRef} className="relative py-24">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center px-6 py-3 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full text-sm font-medium mb-6">
-            <span className="w-2 h-2 bg-emerald-500 rounded-full mr-3"></span>
-            核心价值观
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-            我们的价值观
-          </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            这些价值观指导着我们的行为，塑造着我们的文化，
-            是我们协会持续发展的精神支柱。
-          </p>
-        </div>
+        <PageHeader
+          badge="核心价值观"
+          title="我们的价值观"
+          subtitle="这些价值观指导着我们的行为，塑造着我们的文化，是我们协会持续发展的精神支柱。"
+        />
 
         <div ref={cardsRef} className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {values.map((value) => {
               const IconComponent = value.icon;
               return (
-                <div 
-                  key={value.title} 
-                  className="group relative"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 rounded-2xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                  <div className="relative bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300">
-                    <div className="flex items-start gap-4">
-                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${value.color} flex items-center justify-center text-xl flex-shrink-0`}>
-                        <IconComponent className="text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-bold mb-2 text-slate-900 dark:text-slate-100">{value.title}</h3>
-                        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{value.description}</p>
-                      </div>
+                <PageCard key={value.title} gradient className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${value.color} flex items-center justify-center text-xl flex-shrink-0`}>
+                      <IconComponent className="text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold mb-2 text-foreground">{value.title}</h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{value.description}</p>
                     </div>
                   </div>
-                </div>
+                </PageCard>
               );
             })}
           </div>
@@ -134,14 +122,14 @@ export function ValuesSection() {
 
         {/* 底部总结 */}
         <div className="text-center mt-20">
-          <div className="max-w-4xl mx-auto bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700">
-            <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-slate-100">共同愿景</h3>
-            <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+          <PageCard className="max-w-4xl mx-auto p-8">
+            <h3 className="text-2xl font-bold mb-4 text-foreground">共同愿景</h3>
+            <p className="text-lg text-muted-foreground leading-relaxed">
               我们相信，通过坚持这些价值观，我们能够构建一个充满活力、
               富有创新精神的技术社区，为每一位成员提供成长的机会，
               为社会培养更多优秀的技术人才。
             </p>
-          </div>
+          </PageCard>
         </div>
       </div>
     </section>

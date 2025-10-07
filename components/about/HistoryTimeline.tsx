@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { stagger, createTimeline } from "animejs";
 import { AiOutlineCalendar, AiOutlineTrophy, AiOutlineTeam, AiOutlineRocket } from "react-icons/ai";
-import { PageBackground } from "@/components/ui/PageBackground";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { PageCard } from "@/components/ui/PageCard";
 
@@ -91,21 +90,13 @@ export function HistoryTimeline() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-slate-50 dark:bg-slate-900">
+    <section ref={sectionRef} className="relative py-24">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center px-6 py-3 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium mb-6">
-            <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
-            发展历程
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-            我们的成长轨迹
-          </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            从成立至今，我们经历了无数挑战与突破，
-            每一步都见证着协会的成长与成员的努力。
-          </p>
-        </div>
+        <PageHeader
+          badge="发展历程"
+          title="我们的成长轨迹"
+          subtitle="从成立至今，我们经历了无数挑战与突破，每一步都见证着协会的成长与成员的努力。"
+        />
 
         <div ref={timelineRef} className="max-w-5xl mx-auto">
           <div className="relative">
@@ -122,17 +113,17 @@ export function HistoryTimeline() {
                     
                     {/* 内容卡片 */}
                     <div className={`flex-1 ${isEven ? 'md:text-right' : 'md:text-left'}`}>
-                      <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all duration-300">
+                      <PageCard className="p-6">
                         <div className={`flex items-start gap-4 ${isEven ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
                           <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${item.color} flex items-center justify-center text-xl flex-shrink-0`}>
                             <IconComponent className="text-white" />
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-slate-100">{item.title}</h3>
-                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{item.description}</p>
+                            <h3 className="text-xl font-bold mb-2 text-foreground">{item.title}</h3>
+                            <p className="text-muted-foreground leading-relaxed">{item.description}</p>
                           </div>
                         </div>
-                      </div>
+                      </PageCard>
                     </div>
                   </div>
                 );
