@@ -11,7 +11,6 @@ import {
   AiOutlineTrophy,
   AiOutlineArrowRight
 } from "react-icons/ai";
-import { PageBackground } from "@/components/ui/PageBackground";
 import { StatCard } from "@/components/ui/StatCard";
 
 export function JoinHero() {
@@ -44,8 +43,7 @@ export function JoinHero() {
   }, []);
 
   return (
-    <PageBackground variant="hero" className="min-h-screen flex items-center">
-      <section ref={heroRef} className="w-full">
+    <section ref={heroRef} className="relative min-h-screen flex items-center">
 
       <div className="container mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -106,7 +104,6 @@ export function JoinHero() {
           </div>
         </div>
       </div>
-      </section>
-    </PageBackground>
+    </section>
   );
 }

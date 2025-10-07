@@ -98,7 +98,7 @@ export function ProjectDirections() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-slate-50 dark:bg-slate-900">
+    <section ref={sectionRef} className="py-24">
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
           <div className="inline-flex items-center px-6 py-3 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 rounded-full text-sm font-medium mb-6">

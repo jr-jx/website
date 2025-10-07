@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { stagger, createTimeline } from "animejs";
 import { AiOutlineEye, AiOutlineTag, AiOutlineHeart } from "react-icons/ai";
-import { PageBackground } from "@/components/ui/PageBackground";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { PageCard } from "@/components/ui/PageCard";
 
@@ -40,8 +39,7 @@ export function VisionMission() {
   }, []);
 
   return (
-    <PageBackground variant="section" className="py-24">
-      <section ref={sectionRef} className="w-full">
+    <section ref={sectionRef} className="relative py-24">
         <div className="container mx-auto px-6">
           <PageHeader
             badge="愿景与使命"
@@ -98,7 +96,6 @@ export function VisionMission() {
           </div>
         </div>
       </div>
-      </section>
-    </PageBackground>
+    </section>
   );
 }

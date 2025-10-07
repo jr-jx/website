@@ -4,6 +4,7 @@ import "./globals.css";
 import { siteConfig } from "@/lib/site";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { Header } from "@/components/site/Header";
+import { GlobalBackground } from "@/components/ui/GlobalBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,8 +62,12 @@ export default function RootLayout({
     <html lang="zh-CN" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
-          <Header />
-          {children}
+          <GlobalBackground variant="default">
+            <Header />
+            <div className="relative z-10">
+              {children}
+            </div>
+          </GlobalBackground>
         </ThemeProvider>
       </body>
     </html>

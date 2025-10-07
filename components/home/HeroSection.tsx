@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/mdx/Badge";
 import Link from "next/link";
 import { AiOutlineUserAdd, AiOutlineCalendar } from "react-icons/ai";
-import { PageBackground } from "@/components/ui/PageBackground";
 
 export function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -46,9 +45,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <PageBackground variant="hero" className="min-h-screen flex items-center justify-center">
-      <section ref={heroRef} className="w-full">
-
+    <section ref={heroRef} className="relative min-h-screen flex items-center justify-center">
       <div className="container mx-auto px-6 py-20 text-center">
         <div className="max-w-4xl mx-auto space-y-8">
           <Badge className="mb-4">先锋计算机协会</Badge>
@@ -96,7 +93,6 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-      </section>
-    </PageBackground>
+    </section>
   );
 }
