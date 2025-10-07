@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { stagger, createTimeline } from "animejs";
-import { AiOutlineEnvironment, AiOutlineCar, AiOutlineSubway } from "react-icons/ai";
+import { AiOutlineEnvironment, AiOutlineCar, AiOutlineRuby } from "react-icons/ai";
 
 export function ContactMap() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -130,7 +130,7 @@ export function ContactMap() {
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <AiOutlineSubway className="text-blue-600 dark:text-blue-400" />
+                      <AiOutlineRuby className="text-blue-600 dark:text-blue-400" />
                     </div>
                     <div>
                       <p className="text-slate-700 dark:text-slate-300 font-medium">地铁</p>

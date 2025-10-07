@@ -3,6 +3,9 @@
 import { useEffect, useRef } from "react";
 import { stagger, createTimeline } from "animejs";
 import { AiOutlineCalendar, AiOutlineTrophy, AiOutlineTeam, AiOutlineRocket } from "react-icons/ai";
+import { PageBackground } from "@/components/ui/PageBackground";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { PageCard } from "@/components/ui/PageCard";
 
 const timelineData = [
   {
