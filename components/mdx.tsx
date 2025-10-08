@@ -24,19 +24,19 @@ export interface MetaMap {
 const metaValues: MetaValue[] = [ 
   { 
     name: "title", 
-    regex: /title="(?<value>[^"]*)"/, 
+    regex: /title="([^"]*)"/, 
   }, 
   { 
     name: "lang", 
-    regex: /lang="(?<value>[^"]*)"/, 
+    regex: /lang="([^"]*)"/, 
   }, 
   { 
     name: "displayLineNumbers", 
-    regex: /displayLineNumbers="(?<value>true|false)"/, 
+    regex: /displayLineNumbers="(true|false)"/, 
   }, 
   { 
     name: "allowCopy", 
-    regex: /allowCopy="(?<value>true|false)"/, 
+    regex: /allowCopy="(true|false)"/, 
   }, 
 ]; 
 
