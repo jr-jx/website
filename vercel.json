@@ -3,14 +3,6 @@
   "devCommand": "pnpm dev",
   "installCommand": "pnpm install",
   "framework": "nextjs",
-  "functions": {
-    "app/api/**/*.ts": {
-      "runtime": "nodejs20.x"
-    },
-    "app/api/**/*.tsx": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "regions": ["hkg1"],
   "env": {
     "NODE_ENV": "production"
