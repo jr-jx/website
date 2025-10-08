@@ -1,8 +1,6 @@
 import { siteConfig } from "@/lib/site";
 import { getAllBlogs, getAllEvents } from "@/lib/content";
 
-// 使用默认的 serverless runtime
-
 function escape(str: string) {
   return str
     .replace(/&/g, "&amp;")
