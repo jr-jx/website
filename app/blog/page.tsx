@@ -1,29 +1,45 @@
-import Link from "next/link";
-import { listContent } from "@/lib/mdx";
+import { getPublishedBlogs } from "@/lib/content";
+import { BlogCard } from "@/components/blog/BlogCard";
 
 export default async function BlogIndexPage() {
-  const posts = await listContent("content/blog");
+  const posts = getPublishedBlogs();
+
   return (
     <main className="container mx-auto px-6 py-10">
-      <h1 className="text-3xl font-bold">博客/文章</h1>
-      <p className="mt-4 text-muted-foreground">文章列表：</p>
-      <ul className="mt-6 list-disc pl-6">
-        {posts.length === 0 && (
-          <li className="list-none pl-0 text-muted-foreground">暂无文章</li>
-        )}
-        {posts.map((p) => (
-          <li key={p.slug}>
-            <Link
-              className="text-primary underline-offset-4 hover:underline"
-              href={`/blog/${p.slug}`}
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold tracking-tight">博客文章</h1>
+        <p className="mt-4 text-lg text-muted-foreground">
+          探索我们的最新文章、技术分享和项目经验
+        </p>
+      </div>
+
+      {posts.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <div className="rounded-full bg-muted p-4 mb-4">
+            <svg
+              className="h-8 w-8 text-muted-foreground"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              {p.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold">暂无文章</h3>
+          <p className="text-muted-foreground">我们正在准备精彩内容，敬请期待！</p>
+        </div>
+      ) : (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <BlogCard key={post.slug} blog={post} />
+          ))}
+        </div>
+      )}
     </main>
   );
 }
-
-

@@ -4,6 +4,7 @@ import "./globals.css";
 import { siteConfig } from "@/lib/site";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
 import { GlobalBackground } from "@/components/ui/GlobalBackground";
 
 const geistSans = Geist({
@@ -49,6 +50,12 @@ export const metadata: Metadata = {
           title: `${siteConfig.name} RSS`,
         },
       ],
+      "application/atom+xml": [
+        {
+          url: "/atom.xml",
+          title: `${siteConfig.name} Atom`,
+        },
+      ],
     },
   },
 };
@@ -64,8 +71,9 @@ export default function RootLayout({
         <ThemeProvider>
           <GlobalBackground variant="default">
             <Header />
-            <div className="relative z-10">
-              {children}
+            <div className="relative z-10 min-h-screen flex flex-col">
+              <main className="flex-1">{children}</main>
+              <Footer />
             </div>
           </GlobalBackground>
         </ThemeProvider>

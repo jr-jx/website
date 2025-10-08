@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { stagger, createTimeline } from "animejs";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/mdx/Badge";
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { AiOutlineUserAdd, AiOutlineCalendar } from "react-icons/ai";
 
@@ -14,7 +14,8 @@ export function HeroSection() {
   const buttonsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!heroRef.current || !titleRef.current || !subtitleRef.current || !buttonsRef.current) return;
+    if (!heroRef.current || !titleRef.current || !subtitleRef.current || !buttonsRef.current)
+      return;
 
     // 页面加载动画序列
     const timeline = createTimeline()
@@ -24,19 +25,27 @@ export function HeroSection() {
         duration: 800,
         easing: "easeOutExpo",
       })
-      .add(subtitleRef.current, {
-        translateY: [30, 0],
-        opacity: [0, 1],
-        duration: 600,
-        easing: "easeOutExpo",
-      }, 200)
-      .add(buttonsRef.current.children, {
-        translateY: [30, 0],
-        opacity: [0, 1],
-        duration: 500,
-        easing: "easeOutExpo",
-        delay: stagger(100),
-      }, 400);
+      .add(
+        subtitleRef.current,
+        {
+          translateY: [30, 0],
+          opacity: [0, 1],
+          duration: 600,
+          easing: "easeOutExpo",
+        },
+        200,
+      )
+      .add(
+        buttonsRef.current.children,
+        {
+          translateY: [30, 0],
+          opacity: [0, 1],
+          duration: 500,
+          easing: "easeOutExpo",
+          delay: stagger(100),
+        },
+        400,
+      );
 
     return () => {
       timeline.pause();
@@ -49,8 +58,8 @@ export function HeroSection() {
       <div className="container mx-auto px-6 py-20 text-center">
         <div className="max-w-4xl mx-auto space-y-8">
           <Badge className="mb-4">先锋计算机协会</Badge>
-          
-          <h1 
+
+          <h1
             ref={titleRef}
             className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent"
           >
@@ -60,8 +69,8 @@ export function HeroSection() {
               无限可能
             </span>
           </h1>
-          
-          <p 
+
+          <p
             ref={subtitleRef}
             className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
           >
@@ -70,7 +79,10 @@ export function HeroSection() {
             与我们一起构建未来的技术社区。
           </p>
 
-          <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+          <div
+            ref={buttonsRef}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8"
+          >
             <Button asChild size="lg" className="text-lg px-8 py-6">
               <Link href="/join" className="flex items-center gap-2">
                 <AiOutlineUserAdd />

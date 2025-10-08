@@ -1,30 +1,33 @@
 import { siteConfig } from "@/lib/site";
-import { listContent, loadContentBySlug } from "@/lib/mdx";
+import { getAllBlogs, getAllEvents } from "@/lib/content";
 
-export const runtime = "edge";
+// 使用默认的 serverless runtime
 
 function escape(str: string) {
-  return str.replace(/[<&>\"]+/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c] as string);
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 export async function GET() {
   const base = siteConfig.url.replace(/\/$/, "");
-  const posts = await listContent("content/blog");
-  const items = await Promise.all(
-    posts.map(async (p) => {
-      const full = await loadContentBySlug("content/blog", p.slug);
-      const description = escape(full?.excerpt || "");
-      return `
-        <item>
-          <title>${escape(p.title)}</title>
-          <link>${base}/blog/${p.slug}</link>
-          <guid>${base}/blog/${p.slug}</guid>
-          ${p.date ? `<pubDate>${new Date(p.date).toUTCString()}</pubDate>` : ""}
-          <description>${description}</description>
-        </item>
-      `;
-    })
-  );
+  const posts = getAllBlogs().filter((item) => !item.draft);
+  const events = getAllEvents().filter((event) => !event.draft);
+  const items = [...posts, ...events].map((item) => {
+    const description = escape(item.excerpt || "");
+    return `
+      <item>
+        <title>${escape(item.title)}</title>
+        <link>${base}${item.url}</link>
+        <guid>${base}${item.url}</guid>
+        ${item.date ? `<pubDate>${new Date(item.date).toUTCString()}</pubDate>` : ""}
+        <description>${description}</description>
+      </item>
+    `;
+  });
 
   const rss = `<?xml version="1.0" encoding="UTF-8" ?>
   <rss version="2.0">
@@ -32,7 +35,7 @@ export async function GET() {
       <title>${escape(siteConfig.name)}</title>
       <link>${base}</link>
       <description>${escape(siteConfig.description)}</description>
-      ${items.join("\n")} 
+      ${items.join("\n")}
     </channel>
   </rss>`;
 
@@ -43,5 +46,3 @@ export async function GET() {
     },
   });
 }
-
-

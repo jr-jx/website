@@ -2,92 +2,249 @@
 
 import { useEffect, useRef } from "react";
 import { stagger, createTimeline } from "animejs";
-import { 
-  AiOutlineGithub, 
-  AiOutlineLinkedin, 
-  AiOutlineMail
+import {
+  AiFillBilibili,
+  AiOutlineDocker,
+  AiOutlineGithub,
+  AiOutlineJava,
+  AiOutlineTikTok,
 } from "react-icons/ai";
+import {
+  SiAdobephotoshop,
+  SiAdobepremierepro,
+  SiC,
+  SiFlutter,
+  SiGitee,
+  SiGo,
+  SiKotlin,
+  SiLinux,
+  SiMysql,
+  SiPython,
+  SiQt,
+  SiTiktok,
+  SiTypescript,
+} from "react-icons/si";
+import { RiBlueskyFill, RiNodejsFill, RiReactjsFill, RiVuejsFill } from "react-icons/ri";
 import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const coreMembers = [
   {
-    name: "张明",
+    name: "王卓",
     role: "会长",
-    department: "计算机科学与技术",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    bio: "专注于全栈开发，拥有丰富的项目经验，致力于推动协会技术发展。",
-    skills: ["React", "Node.js", "Python", "Docker"],
-    social: {
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-      email: "zhangming@example.com"
-    }
+    department: "大数据技术",
+    avatar: "https://wsrv.nl/?url=github.com/everfu.png",
+    bio: "专注于全栈开发，拥有丰富的项目经验，狂热的开源爱好者。",
+    skills: [
+      {
+        name: "React",
+        icon: <RiReactjsFill />,
+      },
+      {
+        name: "Node.js",
+        icon: <RiNodejsFill />,
+      },
+      {
+        name: "Docker",
+        icon: <AiOutlineDocker />,
+      },
+      {
+        name: "TypeScript",
+        icon: <SiTypescript />,
+      },
+      {
+        name: "Kotlin",
+        icon: <SiKotlin />,
+      },
+      {
+        name: "Java",
+        icon: <AiOutlineJava />,
+      },
+      {
+        name: "Go",
+        icon: <SiGo />,
+      },
+      {
+        name: "Vue",
+        icon: <RiVuejsFill />,
+      },
+      {
+        name: "Flutter",
+        icon: <SiFlutter />,
+      },
+    ],
+    social: [
+      {
+        name: "github",
+        url: "https://github.com/everfu",
+        target: "_blank",
+        icon: <AiOutlineGithub />,
+      },
+      {
+        name: "gitee",
+        url: "https://gitee.com/everfu",
+        target: "_blank",
+        icon: <SiGitee />,
+      },
+      {
+        name: "butterfly",
+        url: "https://bsky.app/profile/everfu.bsky.social",
+        target: "_blank",
+        icon: <RiBlueskyFill />,
+      },
+      {
+        name: "bilibili",
+        url: "https://space.bilibili.com/1329819902",
+        target: "_blank",
+        icon: <AiFillBilibili />,
+      },
+    ],
   },
   {
-    name: "李华",
-    role: "副会长",
-    department: "软件工程",
-    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+    name: "曾络",
+    role: "副会长/技术部部长",
+    department: "软件工程技术",
+    avatar: "https://wsrv.nl/?url=github.com/xxhhzl.png",
     bio: "AI技术专家，在机器学习和深度学习领域有深入研究。",
-    skills: ["Python", "TensorFlow", "PyTorch", "MLOps"],
-    social: {
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-      email: "lihua@example.com"
-    }
+    skills: [
+      {
+        name: "C/C++",
+        icon: <SiC />,
+      },
+      {
+        name: "Python",
+        icon: <SiPython />,
+      },
+      {
+        name: "MySQL",
+        icon: <SiMysql />,
+      },
+      {
+        name: "Qt",
+        icon: <SiQt />,
+      },
+      {
+        name: "Linux",
+        icon: <SiLinux />,
+      },
+    ],
+    social: [
+      {
+        name: "github",
+        url: "https://github.com/xxhhzl",
+        target: "_blank",
+        icon: <AiOutlineGithub />,
+      },
+      {
+        name: "gitee",
+        url: "https://gitee.com/zlzelu",
+        target: "_blank",
+        icon: <SiGitee />,
+      },
+    ],
   },
   {
-    name: "王强",
-    role: "技术总监",
-    department: "网络工程",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-    bio: "网络安全专家，专注于系统架构设计和安全防护。",
-    skills: ["Go", "Kubernetes", "Security", "DevOps"],
-    social: {
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-      email: "wangqiang@example.com"
-    }
+    name: "方楚元",
+    role: "组织部部长",
+    department: "人工智能工程技术",
+    avatar: "https://s3.qjqq.cn/47/68e522812c208.jpg!color",
+    bio: "阿里人工智能高级训练师，  Ai视觉应用（ 基于yolo/opencv）的爱好者， AIGC创作者，有诸多AIGC城市宣传作品。",
+    skills: [
+      {
+        name: "C",
+        icon: <SiC />,
+      },
+      {
+        name: "Python",
+        icon: <SiPython />,
+      },
+    ],
+    social: [],
   },
   {
-    name: "陈雪",
-    role: "产品经理",
-    department: "信息管理",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-    bio: "用户体验设计师，擅长产品规划和用户研究。",
-    skills: ["Figma", "Product Design", "UX Research", "Agile"],
-    social: {
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-      email: "chenxue@example.com"
-    }
+    name: "郑玮庭",
+    role: "外宣部部长",
+    department: "大数据技术",
+    avatar: "https://s3.qjqq.cn/47/68e522c9c1e45.jpg!color",
+    bio: "资深自媒体运营，擅长内容创作和传播。",
+    skills: [
+      {
+        name: "Photoshop",
+        icon: <SiAdobephotoshop />,
+      },
+      {
+        name: "Premiere",
+        icon: <SiAdobepremierepro />,
+      },
+      {
+        name: "剪映",
+        icon: <SiTiktok />,
+      },
+    ],
+    social: [
+      {
+        name: "抖音",
+        url: "https://v.douyin.com/ac0df6PHlvs",
+        target: "_blank",
+        icon: <AiOutlineTikTok />,
+      },
+    ],
   },
   {
-    name: "刘洋",
-    role: "移动开发组长",
-    department: "计算机科学与技术",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-    bio: "移动应用开发专家，精通iOS和Android开发。",
-    skills: ["Swift", "Kotlin", "React Native", "Flutter"],
-    social: {
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-      email: "liuyang@example.com"
-    }
+    name: "钟浩",
+    role: "财务部部长",
+    department: "软件工程技术",
+    avatar: "https://s3.qjqq.cn/47/68e52489da665.jpg!color",
+    bio: "财务专家，精通财务管理。",
+    skills: [
+      {
+        name: "WPS",
+      },
+      {
+        name: "C/C++",
+        icon: <SiC />,
+      },
+    ],
+    social: [],
   },
   {
-    name: "赵敏",
-    role: "数据科学组长",
-    department: "数据科学与大数据技术",
-    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
-    bio: "数据科学家，专注于大数据分析和机器学习应用。",
-    skills: ["Python", "R", "SQL", "Tableau"],
-    social: {
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-      email: "zhaomin@example.com"
-    }
-  }
+    name: "熊雅琪",
+    role: "技术部副部长",
+    department: "软件工程技术",
+    avatar: "https://s3.qjqq.cn/47/68e52402ec931.jpg!color",
+    bio: "程序猿一个，精通C。",
+    skills: [
+      {
+        name: "C/C++",
+        icon: <SiC />,
+      },
+    ],
+    social: [],
+  },
+  {
+    name: "熊晓琴",
+    role: "外宣部副部长",
+    department: "软件工程技术",
+    avatar: "https://s3.qjqq.cn/47/68e524f3d3309.jpg!color",
+    bio: "审美小天才，擅长设计。",
+    skills: [
+      {
+        name: "Photoshop",
+        icon: <SiAdobephotoshop />,
+      },
+      {
+        name: "Premiere",
+        icon: <SiAdobepremierepro />,
+      },
+      {
+        name: "剪映",
+        icon: <SiTiktok />,
+      },
+    ],
+    social: [],
+  },
 ];
 
 export function CoreMembers() {
@@ -102,19 +259,18 @@ export function CoreMembers() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             if (cardsRef.current?.children) {
-              createTimeline()
-                .add(cardsRef.current.children, {
-                  translateY: [50, 0],
-                  opacity: [0, 1],
-                  duration: 600,
-                  easing: "easeOutExpo",
-                  delay: stagger(100),
-                });
+              createTimeline().add(cardsRef.current.children, {
+                translateY: [30, 0],
+                opacity: [0, 1],
+                duration: 600,
+                easing: "easeOutExpo",
+                delay: stagger(100),
+              });
             }
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     observer.observe(sectionRef.current);
@@ -123,89 +279,75 @@ export function CoreMembers() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-white dark:bg-slate-800">
+    <section ref={sectionRef} className="py-16">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-20">
-          <div className="inline-flex items-center px-6 py-3 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full text-sm font-medium mb-6">
-            <span className="w-2 h-2 bg-indigo-500 rounded-full mr-3"></span>
-            核心成员
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-6">
-            我们的核心团队
-          </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            由来自不同专业背景的优秀学生组成，
-            每个人都在自己的领域有着深厚的专业知识和丰富的实践经验。
+        <div className="text-center mb-12">
+          <Badge className="mb-4">核心成员</Badge>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">我们的核心团队</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            由来自不同专业背景的优秀学生组成，每个人都在自己的领域有着深厚的专业知识和丰富的实践经验。
           </p>
         </div>
 
-        <div ref={cardsRef} className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div ref={cardsRef} className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {coreMembers.map((member) => (
-              <div 
-                key={member.name} 
-                className="group relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-800 dark:to-purple-800 rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                <div className="relative bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300">
-                  {/* 头像和基本信息 */}
-                  <div className="text-center mb-6">
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-indigo-100 dark:border-indigo-900/30">
-                      <Image 
-                        src={member.avatar} 
+              <Card key={member.name} className="group hover:shadow-lg transition-all duration-300">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-border flex-shrink-0">
+                      <Image
+                        src={member.avatar}
                         alt={member.name}
-                        width={96}
-                        height={96}
+                        width={64}
+                        height={64}
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-1">{member.name}</h3>
-                    <p className="text-indigo-600 dark:text-indigo-400 font-medium mb-1">{member.role}</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">{member.department}</p>
-                  </div>
-
-                  {/* 个人简介 */}
-                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4 text-center">
-                    {member.bio}
-                  </p>
-
-                  {/* 技能标签 */}
-                  <div className="mb-6">
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      {member.skills.map((skill) => (
-                        <span 
-                          key={skill}
-                          className="px-3 py-1 text-xs bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full"
-                        >
-                          {skill}
-                        </span>
-                      ))}
+                    <div className="flex-1 min-w-0">
+                      <CardTitle className="text-lg mb-2">{member.name}</CardTitle>
+                      <div className="flex flex-wrap gap-1">
+                        <Badge className="text-xs bg-primary/10 text-primary">{member.role}</Badge>
+                        <Badge className="text-xs bg-muted text-muted-foreground">
+                          {member.department}
+                        </Badge>
+                      </div>
                     </div>
                   </div>
+                </CardHeader>
 
-                  {/* 社交链接 */}
-                  <div className="flex justify-center gap-4">
-                    <a 
-                      href={member.social.github} 
-                      className="w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                    >
-                      <AiOutlineGithub className="text-lg" />
-                    </a>
-                    <a 
-                      href={member.social.linkedin} 
-                      className="w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                    >
-                      <AiOutlineLinkedin className="text-lg" />
-                    </a>
-                    <a 
-                      href={`mailto:${member.social.email}`} 
-                      className="w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                    >
-                      <AiOutlineMail className="text-lg" />
-                    </a>
+                <CardContent className="space-y-4 flex flex-col flex-1">
+                  <p className="text-sm text-muted-foreground leading-relaxed">{member.bio}</p>
+
+                  <div className="flex flex-wrap gap-1 justify-center">
+                    {member.skills.map((skill) => (
+                      <Badge
+                        key={skill.name}
+                        className="text-xs bg-muted text-muted-foreground flex items-center gap-1"
+                      >
+                        {skill.icon}
+                        {skill.name}
+                      </Badge>
+                    ))}
                   </div>
-                </div>
-              </div>
+
+                  {member.social.length > 0 && (
+                    <div className="flex justify-center gap-1 pt-2">
+                      {member.social.map((social) => (
+                        <Button key={social.name} variant="ghost" size="icon-sm" asChild>
+                          <a
+                            href={social.url}
+                            target={social.target || "_blank"}
+                            className="text-muted-foreground hover:text-foreground"
+                          >
+                            {social.icon}
+                          </a>
+                        </Button>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { AiOutlineSun, AiOutlineMoon } from "react-icons/ai";
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
@@ -15,8 +16,8 @@ export function ModeToggle() {
 
   if (!mounted) {
     return (
-      <Button variant="outline" aria-label="切换主题">
-        主题
+      <Button variant="outline" size="sm" aria-label="切换主题">
+        <AiOutlineSun />
       </Button>
     );
   }
@@ -25,12 +26,11 @@ export function ModeToggle() {
   return (
     <Button
       variant="outline"
+      size="sm"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label="切换主题"
     >
-      {isDark ? "浅色" : "深色"}
+      {isDark ? <AiOutlineSun /> : <AiOutlineMoon />}
     </Button>
   );
 }
-
-

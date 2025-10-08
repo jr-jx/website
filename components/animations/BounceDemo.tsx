@@ -22,12 +22,6 @@ export default function BounceDemo() {
   }, []);
 
   return (
-    <div
-      ref={boxRef}
-      className="size-8 rounded-md bg-primary/80 dark:bg-primary/60"
-      aria-hidden
-    />
+    <div ref={boxRef} className="size-8 rounded-md bg-primary/80 dark:bg-primary/60" aria-hidden />
   );
 }
-
-

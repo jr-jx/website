@@ -116,7 +116,34 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Shiki syntax highlighting styles */
+pre.shiki {
+  @apply bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-900 py-2 px-3 text-sm;
+  @apply [counter-reset:_line];
+}
+
+pre.shiki .line:before {
+  @apply content-[counter(_line)] [counter-increment:_line] text-neutral-400 dark:text-neutral-600;
+  @apply mr-3 w-3 inline-block text-right;
+}
+
+pre.shiki {
+  @apply p-0;
+  @apply border border-neutral-200 dark:border-white/20;
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  /* 可选，如果你还希望同步字体样式 */
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }

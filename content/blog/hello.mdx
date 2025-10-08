@@ -1,15 +1,30 @@
 ---
 title: 你好，MDX 文章
 date: 2025-10-06
-excerpt: 用于验证 /blog/[slug] 动态渲染。
+excerpt: 用于验证 /blog/[slug] 动态渲染。这是一篇示例文章，展示了如何使用 MDX 编写内容。
+cover: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop
+author:
+  name: 张三
+  github: everfu
+tags: [示例, MDX, 博客]
+categories: [技术分享]
 ---
 
 # 你好，MDX 文章 <Badge>示例</Badge>
 
 这是从 `content/blog/hello.mdx` 读取并在动态路由下渲染的内容。
 
-<Callout type="info">这是一个信息提示块（Callout）。</Callout>
 
-<CodeBlock code={`console.log('Hello MDX')`} lang="ts" />
+```ts
+const message = greet('World');
+```
 
+www
 
+```js
+console.log('Hello, World!');
+displayLineNumbers="true"
+allowCopy="true"
+title="Hello, World!"
+lang="js"
+```

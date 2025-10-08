@@ -1,7 +1,5 @@
 "use client";
 
-import { ReactNode } from "react";
-
 interface PageHeaderProps {
   badge: string;
   title: string;
@@ -16,9 +14,7 @@ export function PageHeader({ badge, title, subtitle, className = "" }: PageHeade
         <span className="w-2 h-2 bg-primary rounded-full mr-3"></span>
         {badge}
       </div>
-      <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-        {title}
-      </h2>
+      <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">{title}</h2>
       {subtitle && (
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
           {subtitle}

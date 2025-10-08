@@ -1,7 +1,12 @@
 import Fuse from "fuse.js";
-import { listContent, type ContentMeta } from "@/lib/mdx";
+import { getAllBlogs, getAllEvents } from "./content";
 
-export type SearchItem = ContentMeta & { type: "blog" | "event" };
+export type SearchItem = {
+  title: string;
+  excerpt?: string;
+  slug: string;
+  type: "blog" | "event";
+};
 
 export type SearchResult = SearchItem & {
   url: string;
@@ -12,17 +17,27 @@ export type SearchResult = SearchItem & {
   }>;
 };
 
-let cache: { index: Fuse<SearchItem> | null; items: SearchItem[] } = {
+const cache: { index: Fuse<SearchItem> | null; items: SearchItem[] } = {
   index: null,
   items: [],
 };
 
 export async function buildIndex(): Promise<void> {
-  const blogs = await listContent("content/blog");
-  const events = await listContent("content/events");
+  const blogs = getAllBlogs().filter((blog) => !blog.draft);
+  const events = getAllEvents().filter((event) => !event.draft);
   const items: SearchItem[] = [
-    ...blogs.map((b) => ({ ...b, type: "blog" as const })),
-    ...events.map((e) => ({ ...e, type: "event" as const })),
+    ...blogs.map((b) => ({
+      title: b.title,
+      excerpt: b.excerpt,
+      slug: b.slug,
+      type: "blog" as const,
+    })),
+    ...events.map((e) => ({
+      title: e.title,
+      excerpt: e.excerpt,
+      slug: e.slug,
+      type: "event" as const,
+    })),
   ];
   cache.items = items;
   cache.index = new Fuse(items, {
@@ -36,7 +51,7 @@ export async function buildIndex(): Promise<void> {
 
 export async function search(
   query: string,
-  options?: { type?: "blog" | "event" | "all"; limit?: number }
+  options?: { type?: "blog" | "event" | "all"; limit?: number },
 ): Promise<SearchResult[]> {
   if (!cache.index) await buildIndex();
   if (!cache.index) return [];
@@ -52,10 +67,11 @@ export async function search(
     score: r.score ?? undefined,
     url: r.item.type === "blog" ? `/blog/${r.item.slug}` : `/events/${r.item.slug}`,
     matches:
-      r.matches?.
-        filter((m) => m.key === "title" || m.key === "excerpt" || m.key === "slug")
-        .map((m) => ({ key: m.key as "title" | "excerpt" | "slug", indices: m.indices })) || [],
+      r.matches
+        ?.filter((m) => m.key === "title" || m.key === "excerpt" || m.key === "slug")
+        .map((m) => ({
+          key: m.key as "title" | "excerpt" | "slug",
+          indices: [...m.indices] as [number, number][],
+        })) || [],
   }));
 }
-
-

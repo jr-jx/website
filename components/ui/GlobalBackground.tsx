@@ -53,19 +53,28 @@ export function GlobalBackground({ children, variant = "default" }: GlobalBackgr
       <div className="fixed inset-0 -z-10 pointer-events-none">
         <div className={getDecorationClasses()} />
         <div className={getSecondaryDecorationClasses()} />
-        
+
         {/* 微动感粒子效果 */}
         <div className="absolute top-1/3 left-1/3 w-2 h-2 bg-primary/20 rounded-full animate-ping delay-300" />
         <div className="absolute top-2/3 right-1/3 w-1 h-1 bg-secondary/30 rounded-full animate-ping delay-700" />
         <div className="absolute bottom-1/3 left-2/3 w-1.5 h-1.5 bg-primary/15 rounded-full animate-ping delay-1000" />
         <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-secondary/25 rounded-full animate-ping delay-500" />
-        
+
         {/* 浮动几何图形 */}
-        <div className="absolute top-1/5 right-1/5 w-4 h-4 border border-primary/10 rotate-45 animate-spin" style={{ animationDuration: '20s' }} />
-        <div className="absolute bottom-1/5 left-1/5 w-3 h-3 border border-secondary/10 rounded-full animate-bounce" style={{ animationDuration: '3s' }} />
-        <div className="absolute top-3/4 left-1/2 w-2 h-2 bg-primary/5 rounded-full animate-pulse" style={{ animationDuration: '4s' }} />
+        <div
+          className="absolute top-1/5 right-1/5 w-4 h-4 border border-primary/10 rotate-45 animate-spin"
+          style={{ animationDuration: "20s" }}
+        />
+        <div
+          className="absolute bottom-1/5 left-1/5 w-3 h-3 border border-secondary/10 rounded-full animate-bounce"
+          style={{ animationDuration: "3s" }}
+        />
+        <div
+          className="absolute top-3/4 left-1/2 w-2 h-2 bg-primary/5 rounded-full animate-pulse"
+          style={{ animationDuration: "4s" }}
+        />
       </div>
-      
+
       {children}
     </div>
   );

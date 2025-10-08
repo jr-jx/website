@@ -1,7 +1,7 @@
 import { search } from "@/lib/search";
 import { z } from "zod";
 
-export const runtime = "edge";
+// export const runtime = "edge"; // 注释掉，因为MDX库需要Node.js API
 
 const QuerySchema = z.object({
   q: z.string().min(1).max(100),
@@ -23,5 +23,3 @@ export async function GET(request: Request) {
   const results = await search(q, { type, limit });
   return Response.json({ q, type, limit, results });
 }
-
-

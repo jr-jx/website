@@ -9,12 +9,14 @@ interface PageContainerProps {
   className?: string;
 }
 
-export function PageContainer({ children, variant = "default", className = "" }: PageContainerProps) {
+export function PageContainer({
+  children,
+  variant = "default",
+  className = "",
+}: PageContainerProps) {
   return (
     <GlobalBackground variant={variant}>
-      <div className={`relative z-10 ${className}`}>
-        {children}
-      </div>
+      <div className={`relative z-10 ${className}`}>{children}</div>
     </GlobalBackground>
   );
 }

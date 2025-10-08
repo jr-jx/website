@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 
 const stats = [
-  { label: "活跃成员", value: 150, suffix: "+" },
-  { label: "技术活动", value: 24, suffix: "+" },
-  { label: "项目作品", value: 12, suffix: "+" },
-  { label: "学习资源", value: 50, suffix: "+" },
+  { label: "活跃成员", value: 300, suffix: "+" },
+  { label: "技术活动", value: 999, suffix: "+" },
+  { label: "项目作品", value: 999, suffix: "+" },
+  { label: "学习资源", value: 999, suffix: "+" },
 ];
 
 export function StatsSection() {
@@ -24,31 +24,31 @@ export function StatsSection() {
             stats.forEach((stat, index) => {
               const startTime = Date.now();
               const duration = 2000;
-              
+
               const animateValue = () => {
                 const elapsed = Date.now() - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 const easeOutExpo = 1 - Math.pow(2, -10 * progress);
                 const currentValue = Math.round(stat.value * easeOutExpo);
-                
-                setAnimatedValues(prev => {
+
+                setAnimatedValues((prev) => {
                   const newValues = [...prev];
                   newValues[index] = currentValue;
                   return newValues;
                 });
-                
+
                 if (progress < 1) {
                   requestAnimationFrame(animateValue);
                 }
               };
-              
+
               animateValue();
             });
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     observer.observe(sectionRef.current);
@@ -76,7 +76,8 @@ export function StatsSection() {
             <div key={index} className="text-center group">
               <div className="relative">
                 <div className="text-4xl md:text-5xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform duration-300">
-                  {animatedValues[index]}{stat.suffix}
+                  {animatedValues[index]}
+                  {stat.suffix}
                 </div>
                 <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>

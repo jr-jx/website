@@ -29,7 +29,7 @@ export function CTA() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     observer.observe(sectionRef.current);
@@ -38,7 +38,10 @@ export function CTA() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
+    <section
+      ref={sectionRef}
+      className="py-20 bg-gradient-to-br from-primary/10 via-background to-secondary/10"
+    >
       <div className="container mx-auto px-6">
         <Card className="max-w-4xl mx-auto border-0 bg-background/50 backdrop-blur-sm shadow-2xl">
           <CardContent className="p-12 text-center">
@@ -66,17 +69,15 @@ export function CTA() {
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6">
-                  <Link href="/contact" className="flex items-center gap-2">
+                  <Link
+                    href="mailto:hi@jr-jx.cn"
+                    target="_blank"
+                    className="flex items-center gap-2"
+                  >
                     <AiOutlineMail />
                     联系我们
                   </Link>
                 </Button>
-              </div>
-
-              <div className="pt-8 border-t border-border/50">
-                <p className="text-sm text-muted-foreground">
-                  已有账户？<Link href="/login" className="text-primary hover:underline">登录</Link>
-                </p>
               </div>
             </div>
           </CardContent>

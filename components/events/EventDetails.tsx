@@ -1,4 +1,5 @@
-import { Badge } from "@/components/mdx/Badge";
+// import { formatDate } from "@/lib/date"; // 暂时不使用
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { type EventDetails } from "@/types/event";
 
@@ -7,14 +8,18 @@ interface EventDetailsProps {
 }
 
 export function EventDetails({ event }: EventDetailsProps) {
-  const formatDate = (dateStr?: string) => {
+  const formatEventDate = (dateStr?: string) => {
     if (!dateStr) return null;
-    return new Date(dateStr).toLocaleDateString("zh-CN", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      weekday: "long",
-    });
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    // const month = date.getMonth() + 1; // 暂时不使用
+    const day = date.getDate();
+    const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+    const weekday = weekdays[date.getDay()];
+    const months = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+    const monthName = months[date.getMonth()];
+    
+    return `${weekday}，${year}年${monthName}${day}日`;
   };
 
   const formatTime = (timeStr?: string) => {
@@ -26,7 +31,8 @@ export function EventDetails({ event }: EventDetailsProps) {
   };
 
   const isUpcoming = event.date && new Date(event.date) > new Date();
-  const isFull = event.maxAttendees && event.currentAttendees && event.currentAttendees >= event.maxAttendees;
+  const isFull =
+    event.maxAttendees && event.currentAttendees && event.currentAttendees >= event.maxAttendees;
 
   return (
     <div className="space-y-6">
@@ -41,7 +47,7 @@ export function EventDetails({ event }: EventDetailsProps) {
               {isFull && <Badge>已满员</Badge>}
             </div>
           </div>
-          
+
           {event.registrationUrl && isUpcoming && !isFull && (
             <Button asChild size="lg">
               <a href={event.registrationUrl} target="_blank" rel="noopener noreferrer">
@@ -51,9 +57,7 @@ export function EventDetails({ event }: EventDetailsProps) {
           )}
         </div>
 
-        {event.excerpt && (
-          <p className="text-lg text-muted-foreground">{event.excerpt}</p>
-        )}
+        {event.excerpt && <p className="text-lg text-muted-foreground">{event.excerpt}</p>}
       </div>
 
       {/* Event Info */}
@@ -62,7 +66,7 @@ export function EventDetails({ event }: EventDetailsProps) {
           <div className="rounded-lg border p-4">
             <h3 className="font-semibold mb-2">活动时间</h3>
             <p className="text-sm text-muted-foreground">
-              {formatDate(event.date)}
+              {formatEventDate(event.date)}
               {(event.startTime || event.endTime) && (
                 <span className="block mt-1">
                   {event.startTime && formatTime(event.startTime)}

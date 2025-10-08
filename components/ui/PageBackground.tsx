@@ -8,7 +8,11 @@ interface PageBackgroundProps {
   className?: string;
 }
 
-export function PageBackground({ children, variant = "hero", className = "" }: PageBackgroundProps) {
+export function PageBackground({
+  children,
+  variant = "hero",
+  className = "",
+}: PageBackgroundProps) {
   const getBackgroundClasses = () => {
     switch (variant) {
       case "hero":

@@ -12,27 +12,27 @@ interface Card3DProps {
   gradient?: boolean;
 }
 
-export function Card3D({ 
-  children, 
-  className = "", 
+export function Card3D({
+  children,
+  className = "",
   animationType = "float",
   hover = true,
-  gradient = false
+  gradient = false,
 }: Card3DProps) {
   return (
     <Animated3D animationType={animationType}>
-      <div className={cn(
-        "relative bg-card/80 backdrop-blur-sm rounded-3xl border shadow-lg transition-all duration-300",
-        hover && "hover:shadow-2xl hover:scale-105",
-        gradient && "group",
-        className
-      )}>
+      <div
+        className={cn(
+          "relative bg-card/80 backdrop-blur-sm rounded-3xl border shadow-lg transition-all duration-300",
+          hover && "hover:shadow-2xl hover:scale-105",
+          gradient && "group",
+          className,
+        )}
+      >
         {gradient && (
           <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
         )}
-        <div className="relative">
-          {children}
-        </div>
+        <div className="relative">{children}</div>
       </div>
     </Animated3D>
   );

@@ -1,79 +1,182 @@
-import fs from "node:fs/promises";
-import path from "node:path";
-import matter from "gray-matter";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { Blog, Event, BlogWithUrl, EventWithUrl } from '@/types/content';
 
-export type ContentMeta = {
-  title: string;
-  date?: string;
-  excerpt?: string;
-  slug: string;
-  draft?: boolean;
-};
+const contentDirectory = path.join(process.cwd(), 'content');
 
-export type LoadedContent = ContentMeta & {
-  content: string;
-};
+// 获取所有 MDX 文件
+function getAllMdxFiles(dir: string): string[] {
+  const files: string[] = [];
+  
+  function traverse(currentDir: string) {
+    const items = fs.readdirSync(currentDir);
+    
+    for (const item of items) {
+      const fullPath = path.join(currentDir, item);
+      const stat = fs.statSync(fullPath);
+      
+      if (stat.isDirectory()) {
+        traverse(fullPath);
+      } else if (item.endsWith('.mdx')) {
+        files.push(fullPath);
+      }
+    }
+  }
+  
+  traverse(dir);
+  return files;
+}
 
-async function readDirectoryFiles(dir: string): Promise<string[]> {
-  const cwd = process.cwd();
-  const directory = path.join(cwd, dir);
-  try {
-    const entries = await fs.readdir(directory, { withFileTypes: true });
-    return entries
-      .filter((e) => e.isFile() && e.name.endsWith(".mdx"))
-      .map((e) => path.join(directory, e.name));
-  } catch {
-    return [];
+// 解析 MDX 文件
+function parseMdxFile(filePath: string, type: 'blog' | 'event'): Blog | Event {
+  const fileContents = fs.readFileSync(filePath, 'utf8');
+  const { data, content } = matter(fileContents);
+  
+  const slug = path.basename(filePath, '.mdx');
+  
+  const baseContent = {
+    slug,
+    title: data.title || '',
+    cover: data.cover || '',
+    date: data.date || '',
+    excerpt: data.excerpt || '',
+    draft: data.draft || false,
+    tags: data.tags || [],
+    categories: data.categories || [],
+    body: {
+      raw: content,
+      code: content,
+    },
+  };
+  
+  if (type === 'blog') {
+    return {
+      ...baseContent,
+      author: {
+        name: data.author.name || '',
+        github: data.author.github || '',
+      }
+    } as Blog;
+  } else {
+    return {
+      ...baseContent,
+    } as Event;
   }
 }
 
-export async function listContent(dir: string, includeDrafts = false): Promise<ContentMeta[]> {
-  const files = await readDirectoryFiles(dir);
-  const items: ContentMeta[] = [];
-  for (const file of files) {
-    const raw = await fs.readFile(file, "utf8");
-    const { data } = matter(raw);
-    const slug = path.basename(file).replace(/\.mdx$/, "");
-    const isDraft = Boolean(data.draft);
-    
-    // Skip drafts unless explicitly included
-    if (isDraft && !includeDrafts) continue;
-    
-    items.push({
-      title: typeof data.title === "string" ? data.title : slug,
-      date: typeof data.date === "string" ? data.date : undefined,
-      excerpt: typeof data.excerpt === "string" ? data.excerpt : undefined,
-      slug,
-      draft: isDraft,
-    });
-  }
-  // sort by date desc if present, otherwise by title
-  return items.sort((a, b) => {
-    if (a.date && b.date) return a.date > b.date ? -1 : 1;
-    return a.title.localeCompare(b.title);
+// 获取所有博客文章
+export function getAllBlogs(): BlogWithUrl[] {
+  const blogDir = path.join(contentDirectory, 'blog');
+  if (!fs.existsSync(blogDir)) return [];
+  
+  const files = getAllMdxFiles(blogDir);
+  return files.map(file => {
+    const blog = parseMdxFile(file, 'blog') as Blog;
+    return {
+      ...blog,
+      url: `/blog/${blog.slug}`,
+    };
   });
 }
 
-export async function loadContentBySlug(
-  dir: string,
-  slug: string
-): Promise<LoadedContent | null> {
-  const cwd = process.cwd();
-  const filepath = path.join(cwd, dir, `${slug}.mdx`);
-  try {
-    const raw = await fs.readFile(filepath, "utf8");
-    const { content, data } = matter(raw);
+// 获取所有活动
+export function getAllEvents(): EventWithUrl[] {
+  const eventDir = path.join(contentDirectory, 'events');
+  if (!fs.existsSync(eventDir)) return [];
+  
+  const files = getAllMdxFiles(eventDir);
+  return files.map(file => {
+    const event = parseMdxFile(file, 'event') as Event;
     return {
-      title: typeof data.title === "string" ? data.title : slug,
-      date: typeof data.date === "string" ? data.date : undefined,
-      excerpt: typeof data.excerpt === "string" ? data.excerpt : undefined,
-      slug,
-      draft: Boolean(data.draft),
-      content,
+      ...event,
+      url: `/events/${event.slug}`,
     };
-  } catch {
-    return null;
-  }
+  });
 }
 
+// 获取已发布的博客文章
+export function getPublishedBlogs(): BlogWithUrl[] {
+  return getAllBlogs().filter((blog) => !blog.draft);
+}
 
+// 获取已发布的活动
+export function getPublishedEvents(): EventWithUrl[] {
+  return getAllEvents().filter((event) => !event.draft);
+}
+
+// 根据 slug 获取博客文章
+export function getBlogBySlug(slug: string): BlogWithUrl | undefined {
+  return getAllBlogs().find((blog) => blog.slug === slug);
+}
+
+// 根据 slug 获取活动
+export function getEventBySlug(slug: string): EventWithUrl | undefined {
+  return getAllEvents().find((event) => event.slug === slug);
+}
+
+// 获取最新的博客文章
+export function getLatestBlogs(count: number = 5): BlogWithUrl[] {
+  return getPublishedBlogs()
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, count);
+}
+
+// 获取最新的活动
+export function getLatestEvents(count: number = 5): EventWithUrl[] {
+  return getPublishedEvents()
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, count);
+}
+
+// 根据标签获取博客文章
+export function getBlogsByTag(tag: string): BlogWithUrl[] {
+  return getPublishedBlogs().filter((blog) => blog.tags?.includes(tag));
+}
+
+// 根据标签获取活动
+export function getEventsByTag(tag: string): EventWithUrl[] {
+  return getPublishedEvents().filter((event) => event.tags?.includes(tag));
+}
+
+// 根据分类获取博客文章
+export function getBlogsByCategory(category: string): BlogWithUrl[] {
+  return getPublishedBlogs().filter((blog) => blog.categories?.includes(category));
+}
+
+// 获取所有标签
+export function getAllTags(): string[] {
+  const blogTags = getAllBlogs().flatMap((blog) => blog.tags || []);
+  const eventTags = getAllEvents().flatMap((event) => event.tags || []);
+  return Array.from(new Set([...blogTags, ...eventTags]));
+}
+
+// 获取所有分类
+export function getAllCategories(): string[] {
+  const blogCategories = getAllBlogs().flatMap((blog) => blog.categories || []);
+  return Array.from(new Set(blogCategories));
+}
+
+// 获取标签统计
+export function getTagStats(): Record<string, number> {
+  const allTags = [...getAllBlogs(), ...getAllEvents()].flatMap((item) => item.tags || []);
+  const stats: Record<string, number> = {};
+
+  allTags.forEach((tag) => {
+    stats[tag] = (stats[tag] || 0) + 1;
+  });
+
+  return stats;
+}
+
+// 获取分类统计
+export function getCategoryStats(): Record<string, number> {
+  const allCategories = getAllBlogs().flatMap((blog) => blog.categories || []);
+  const stats: Record<string, number> = {};
+
+  allCategories.forEach((category) => {
+    stats[category] = (stats[category] || 0) + 1;
+  });
+
+  return stats;
+}
