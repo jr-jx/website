@@ -27,9 +27,9 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           content: event.body.raw,
         }}
       />
-      <div className="mt-8 prose dark:prose-invert max-w-none">
-        <CustomMDX event={event} />
-      </div>
+      <article className="mt-8 prose dark:prose-invert max-w-none">
+        <CustomMDX source={event.body.raw} />
+      </article>
     </main>
   );
 }

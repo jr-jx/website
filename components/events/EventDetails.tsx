@@ -2,6 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { type EventDetails } from "@/types/event";
+import { Calendar, MapPin, Clock, ExternalLink } from "lucide-react";
 
 interface EventDetailsProps {
   event: EventDetails;
@@ -31,44 +32,57 @@ export function EventDetails({ event }: EventDetailsProps) {
   };
 
   const isUpcoming = event.date && new Date(event.date) > new Date();
-  const isFull =
-    event.maxAttendees && event.currentAttendees && event.currentAttendees >= event.maxAttendees;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Event Header */}
-      <div className="space-y-4">
-        <div className="flex items-start justify-between">
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold">{event.title}</h1>
-            <div className="flex items-center gap-2">
-              {event.draft && <Badge>草稿</Badge>}
-              {!isUpcoming && <Badge>已结束</Badge>}
-              {isFull && <Badge>已满员</Badge>}
+      <div className="space-y-6">
+        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+          <div className="space-y-4 flex-1">
+            <div className="space-y-3">
+              <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">
+                {event.title}
+              </h1>
+              <div className="flex items-center gap-3">
+                {event.draft && <Badge variant="secondary" className="px-3 py-1">草稿</Badge>}
+                {!isUpcoming && <Badge variant="destructive" className="px-3 py-1">已结束</Badge>}
+                {isUpcoming && !event.draft && <Badge variant="default" className="px-3 py-1">进行中</Badge>}
+              </div>
             </div>
+
+            {event.excerpt && (
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl">
+                {event.excerpt}
+              </p>
+            )}
           </div>
 
-          {event.registrationUrl && isUpcoming && !isFull && (
-            <Button asChild size="lg">
-              <a href={event.registrationUrl} target="_blank" rel="noopener noreferrer">
+          {event.registrationUrl && isUpcoming && (
+            <Button asChild size="lg" className="h-12 px-8 text-base font-semibold">
+              <a href={event.registrationUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                 立即报名
+                <ExternalLink className="h-4 w-4" />
               </a>
             </Button>
           )}
         </div>
-
-        {event.excerpt && <p className="text-lg text-muted-foreground">{event.excerpt}</p>}
       </div>
 
       {/* Event Info */}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         {event.date && (
-          <div className="rounded-lg border p-4">
-            <h3 className="font-semibold mb-2">活动时间</h3>
-            <p className="text-sm text-muted-foreground">
-              {formatEventDate(event.date)}
+          <div className="rounded-xl border bg-card p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Calendar className="h-5 w-5 text-primary" />
+              </div>
+              <h3 className="font-semibold text-lg">活动时间</h3>
+            </div>
+            <p className="text-sm text-muted-foreground space-y-1">
+              <span className="block font-medium">{formatEventDate(event.date)}</span>
               {(event.startTime || event.endTime) && (
-                <span className="block mt-1">
+                <span className="flex items-center gap-1 text-sm">
+                  <Clock className="h-3 w-3" />
                   {event.startTime && formatTime(event.startTime)}
                   {event.startTime && event.endTime && " - "}
                   {event.endTime && formatTime(event.endTime)}
@@ -79,39 +93,27 @@ export function EventDetails({ event }: EventDetailsProps) {
         )}
 
         {event.location && (
-          <div className="rounded-lg border p-4">
-            <h3 className="font-semibold mb-2">活动地点</h3>
-            <p className="text-sm text-muted-foreground">{event.location}</p>
-          </div>
-        )}
-
-        {event.maxAttendees && (
-          <div className="rounded-lg border p-4">
-            <h3 className="font-semibold mb-2">参与人数</h3>
-            <p className="text-sm text-muted-foreground">
-              {event.currentAttendees || 0} / {event.maxAttendees} 人
-            </p>
-            {event.maxAttendees > 0 && (
-              <div className="mt-2 w-full bg-secondary rounded-full h-2">
-                <div
-                  className="bg-primary h-2 rounded-full transition-all"
-                  style={{
-                    width: `${Math.min(100, ((event.currentAttendees || 0) / event.maxAttendees) * 100)}%`,
-                  }}
-                />
+          <div className="rounded-xl border bg-card p-6 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <MapPin className="h-5 w-5 text-primary" />
               </div>
-            )}
+              <h3 className="font-semibold text-lg">活动地点</h3>
+            </div>
+            <p className="text-sm text-muted-foreground">{event.location}</p>
           </div>
         )}
       </div>
 
       {/* Tags */}
       {event.tags && event.tags.length > 0 && (
-        <div className="space-y-2">
-          <h3 className="font-semibold">标签</h3>
+        <div className="space-y-4">
+          <h3 className="font-semibold text-lg">活动标签</h3>
           <div className="flex flex-wrap gap-2">
             {event.tags.map((tag) => (
-              <Badge key={tag}>{tag}</Badge>
+              <Badge key={tag} variant="secondary" className="px-3 py-1 text-sm">
+                {tag}
+              </Badge>
             ))}
           </div>
         </div>

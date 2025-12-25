@@ -9,8 +9,6 @@ export type EventMeta = {
   endTime?: string;
   location?: string;
   registrationUrl?: string;
-  maxAttendees?: number;
-  currentAttendees?: number;
   tags?: string[];
 };
 
